@@ -1,0 +1,13 @@
+[project]
+name = "pyside-analisys"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2",
+    "matplotlib>=3.10.1",
+    "pandas>=2.2.3",
+    "pyside6>=6.8.3",
+    "seaborn>=0.13.2",
+]

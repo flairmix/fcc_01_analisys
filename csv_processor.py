@@ -118,3 +118,38 @@ class CSVProcessor:
         """Основной метод обработки данных."""
         self.check_conditions()
         self.save_csv()
+
+
+    def display_basic_statistics(self):
+        result_output = "--- Basic Column Statistics ---\n"
+        result_output += f"Total rows: {len(self.df)}\n\n"
+
+        ignoring_cols = [
+            "ID", "Содержание", "Дата ввода требования в действие",
+            "Реестр НТД", "Требование безопасности", "ЮИН"
+        ]
+        total_flagged = 0
+        flag_lines = []
+
+        COL_WIDTH = 60
+        VALUE_WIDTH = 10  
+
+        for col in self.df.columns:
+            if self.df[col].dtype in [int, float] and col not in ignoring_cols:
+                flagged_count = self.df[col].sum()
+                total_flagged += flagged_count
+                flag_lines.append((col, flagged_count))
+
+        for col, count in flag_lines:
+            right_text = f"{count} flagged"
+            result_output += f"{col.ljust(COL_WIDTH)} : {right_text.rjust(VALUE_WIDTH)}\n"
+
+        result_output += "\n"
+        result_output += f"{'Total flagged'.ljust(COL_WIDTH)} : {str(total_flagged).rjust(VALUE_WIDTH)}\n"
+        empty_comments = self.df['Комментарии'].astype(str).str.strip().replace('', pd.NA).isna().sum()
+        result_output += f"{'Rows with no comments'.ljust(COL_WIDTH)} : {str(empty_comments).rjust(VALUE_WIDTH)}"
+
+        return result_output
+
+
+

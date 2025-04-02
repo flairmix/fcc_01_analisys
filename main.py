@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout,
     QPushButton, QFileDialog, QLabel, QTextEdit
 )
+from PySide6.QtGui import QFont
 from csv_processor import CSVProcessor
 
 
@@ -27,6 +28,7 @@ class MainWindow(QWidget):
         self.status_label = QLabel("Ожидание...")
         self.log_output = QTextEdit()
         self.log_output.setReadOnly(True)
+        self.log_output.setFont(QFont("Courier New", 10))
 
         layout = QVBoxLayout()
         layout.addWidget(self.upload_btn)
@@ -60,23 +62,15 @@ class MainWindow(QWidget):
         try:
             processor = CSVProcessor(self.input_path, self.output_path, self.pattern_path)
             processor.process_data()
+            self.status_label.setText("Успешно обработано!")
+            
+            
+            self.log_output.setPlainText(processor.display_basic_statistics())
+
 
         except Exception as e:
             self.status_label.setText("Ошибка")
             self.log_output.setPlainText(str(e))
-
-
-    def get_flag_columns(self, df):
-        return [
-            col for col in df.columns
-            if col not in ["ID", "Содержание", "Комментарии"]
-        ]
-
-    def _capture_stdout(self, func):
-        buf = io.StringIO()
-        with contextlib.redirect_stdout(buf):
-            func()
-        self.log_output.setPlainText(buf.getvalue())
 
 
 if __name__ == "__main__":

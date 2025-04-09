@@ -122,6 +122,7 @@ class CSVProcessor:
 
     def display_basic_statistics(self):
         result_output = "--- Basic Column Statistics ---\n"
+        result_output += f"doc_path - { self.input_csv_path}\n"
         result_output += f"Total rows: {len(self.df)}\n\n"
 
         ignoring_cols = [
@@ -147,6 +148,7 @@ class CSVProcessor:
         result_output += "\n"
         result_output += f"{'Total flagged'.ljust(COL_WIDTH)} : {str(total_flagged).rjust(VALUE_WIDTH)}\n"
         empty_comments = self.df['Комментарии'].astype(str).str.strip().replace('', pd.NA).isna().sum()
+        result_output += f"{'Rows with comments'.ljust(COL_WIDTH)} : {str(len(self.df)-empty_comments).rjust(VALUE_WIDTH)}\n"
         result_output += f"{'Rows with no comments'.ljust(COL_WIDTH)} : {str(empty_comments).rjust(VALUE_WIDTH)}"
 
         return result_output

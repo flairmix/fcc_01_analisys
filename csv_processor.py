@@ -103,29 +103,6 @@ class CSVProcessor:
                         else:
                             self.df.at[i, "Комментарии"].replace(category, f"{category} {match}\n")
 
-                        # if category == "Наличие таблиц":
-                        #     self.df.at[i, "Комментарии"] += f"{category}\n"
-                        # elif category == "Упоминание расчетов":
-                        #     self.df.at[i, "Комментарии"] += f"{category} {match} \n"
-                            # break
-                        # elif category == "Требование носит рекомендательный характер":
-                        #     if "Неоднозначная формулировка" not in self.df.at[i, "Комментарии"]:
-                        #         self.df.at[i, "Комментарии"] += f"Неоднозначная формулировка {match}\n"
-                        #     else:
-                        #         self.df.at[i, "Комментарии"] += f"{match}"
-                        # elif category == "Требование носит рекомендательный характер":
-                        #     if "Требование носит рекомендательный характер" not in self.df.at[i, "Комментарии"]:
-                        #         self.df.at[i, "Комментарии"] += f"Требование носит рекомендательный характер {match}\n"
-                        #     else:
-                        #         self.df.at[i, "Комментарии"] += f"{match}\n"
-                        # elif category == "Неоднозначные формулировки и условия":
-                        #     if "Неоднозначные формулировки и условия" not in self.df.at[i, "Комментарии"]:
-                        #         self.df.at[i, "Комментарии"] += f"Неоднозначные формулировки и условия {match}\n"
-                        #     else:
-                        #         self.df.at[i, "Комментарии"] += f"{match}\n"
-                        # else:
-                        #     self.df.at[i, "Комментарии"] += f"{category} {match}\n"
-
     def save_csv(self):
         """Сохраняет обновленный DataFrame в CSV."""
         self.df[self.final_columns].to_csv(self.output_csv_path, index=False, encoding="utf-8", sep=";")

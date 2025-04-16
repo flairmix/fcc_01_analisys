@@ -18,7 +18,7 @@ class CSVProcessor:
             "ID",
             "Содержание",
             "Дата ввода требования в действие",
-            "Реестр НТД",
+            # "Реестр НТД",
             "Требование безопасности",
             "ЮИН"
         ]
@@ -90,7 +90,8 @@ class CSVProcessor:
 
     def check_conditions(self):
         for i, row in self.df.iterrows():
-            content = self.clean_html_and_quotes(row["Содержание"])
+            content = row["Содержание"]
+            # content = self.clean_html_and_quotes(row["Содержание"])
             for category, pattern_list in self.patterns.items():
                 for pattern in pattern_list:
                     match = self.get_pattern_text(content, pattern)
@@ -119,8 +120,10 @@ class CSVProcessor:
         result_output += f"Total rows: {len(self.df)}\n\n"
 
         ignoring_cols = [
-            "ID", "Содержание", "Дата ввода требования в действие",
-            "Реестр НТД", "Требование безопасности", "ЮИН"
+            "ID", "Содержание", 
+            "Дата ввода требования в действие",
+            # "Реестр НТД", 
+            "Требование безопасности", "ЮИН"
         ]
         total_flagged = 0
         flag_lines = []
